@@ -1,5 +1,4 @@
 import hoshino
-import time
 from hoshino import Service
 from hoshino.typing import NoticeSession, CQEvent
 from .msgsql import mysql
@@ -25,6 +24,8 @@ async def recall(session: NoticeSession):
     if session.event.user_id == hoshino.config.SUPERUSERS[0]:
         print('SUPERUSER PASS')
         return
+    if session.event.user_id == session.event.operator_id:
+        return
 
     sql = f'select qqid, msg from qqmsg where msgid = {msgid}'
     result = mysql(sql)
@@ -44,6 +45,6 @@ async def recall(session: NoticeSession):
 
 @sv.scheduled_job('cron', minute='*/5')
 async def delete():
-    sql = 'delete from qqmsg where julianday("now") * 1440 - julianday(times) * 1440 < 2;'
+    sql = 'delete from qqmsg where julianday("now") * 1440 - julianday(times) * 1440 > 2;'
     mysql(sql)
     print('删除数据库命令已执行完毕')
