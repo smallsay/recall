@@ -3,7 +3,7 @@ from hoshino import Service
 from hoshino.typing import NoticeSession, CQEvent
 from .msgsql import mysql
 
-sv = Service('防撤回', enable_on_default=True, visible=True)
+sv = Service('recall', enable_on_default=True, visible=True)
 
 @sv.on_message()
 async def get_msg(bot, ev:CQEvent):
