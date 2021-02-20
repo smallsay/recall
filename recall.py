@@ -45,6 +45,6 @@ async def recall(session: NoticeSession):
 
 @sv.scheduled_job('cron', minute='*/5')
 async def delete():
-    sql = 'delete from qqmsg where julianday("now") * 1440 - julianday(times) * 1440 > 2;'
+    sql = 'delete from qqmsg where julianday("now") * 1440 - julianday(times) * 1440 < 2;'
     mysql(sql)
     print('删除数据库命令已执行完毕')
