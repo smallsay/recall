@@ -68,6 +68,8 @@ async def recall(session: NoticeSession):
     ss = []
     msgid = session.event.message_id
 
+    if session.event.user_id == session.event.self_id:
+        return
     if session.event.user_id == hoshino.config.SUPERUSERS[0]:
         return
     if session.event.user_id != session.event.operator_id:
